@@ -1,0 +1,14 @@
+# Python caches
+__pycache__/
+*.pyc
+
+# Notebooks checkpoints
+.ipynb_checkpoints/
+
+# Data / artifacts - do not upload
+data/
+preproc/
+features/
+roi_masks/
+models/
+reports/
