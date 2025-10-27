@@ -1,0 +1,18 @@
+# Image preprocessing parameters
+resize: 512           # target square size (set null to keep original)
+grayscale: true
+clahe:
+  clip_limit: 2.0
+  tile_grid_size: [8, 8]
+denoise:
+  method: "median"    # median | gaussian | none
+  ksize: 3
+threshold:
+  method: "otsu"      # otsu | adaptive | none
+morphology:
+  open_kernel: 3
+  close_kernel: 5
+  iterations: 1
+roi:
+  use_roi: true       # if true, keep largest contour as bottle ROI
+save_masks: true
