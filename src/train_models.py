@@ -76,7 +76,7 @@ for name in cfg_metrics:
         selector = make_selector(cfg, X, y)
         model = make_model(m)
         pipe = Pipeline([("scaler", scaler), ("selector", selector), ("model", model)])
-        cvres = cross_validate(pipe, X, y, cv=skf, scoring=metrics, return_estimator=True)
+       cvres = cross_validate(pipe, X, y, cv=skf, scoring=scorers, return_estimator=True)
         row = {"model": m["name"]}
         for k, v in cvres.items():
             if k.startswith("test_"):
