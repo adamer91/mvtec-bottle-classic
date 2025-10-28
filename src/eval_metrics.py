@@ -10,8 +10,14 @@ def main():
     metrics = pd.read_csv(os.path.join(args.reports_dir, "metrics.csv"))
     print(metrics)
 
-    # simple bar plot for F1 and ROC-AUC
-    for metric in ["f1","roc_auc"]:
+    # wybierz metryki, które naprawdę są w pliku
+    test_cols = [c for c in metrics.columns if c.startswith("test_")]
+    metric_names = [c.replace("test_", "") for c in test_cols]
+
+    for metric in metric_names:
+        series = metrics[f"test_{metric}"]
+        if series.isna().all():
+            continue  # pomijamy metryki z samymi NaN
         plt.figure()
         metrics.plot(x="model", y=f"test_{metric}", kind="bar", legend=False)
         plt.ylabel(metric.upper())
