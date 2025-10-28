@@ -61,13 +61,14 @@ def main():
 
     skf = StratifiedKFold(n_splits=int(cfg["cv"]["folds"]), shuffle=bool(cfg["cv"]["shuffle"]), random_state=rs)
 
-    metrics = {
-        "accuracy": make_scorer(accuracy_score),
-        "precision": make_scorer(precision_score),
-        "recall": make_scorer(recall_score),
-        "f1": make_scorer(f1_score),
-        "roc_auc": make_scorer(roc_auc_score, needs_proba=True)
-    }
+    cfg_metrics = cfg.get("metrics", ["accuracy", "precision", "recall", "f1"])  # bierzemy z YAML
+scorers = {}
+for name in cfg_metrics:
+    if name == "roc_auc":
+        # najprostsza i najstabilniejsza forma
+        scorers[name] = "roc_auc"
+    else:
+        scorers[name] = get_scorer(name)
 
     results = []
     for m in cfg["models"]:
